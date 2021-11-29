@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>JupiterMeet Installation</title>
+    <meta charset="utf-8">
+    <meta name="author" content="RTC Labs">
+    <script defer src="js/all.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link id="theme-style" rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="favicon.ico" />
+</head>
+
+<body class="body-green">
+    <div class="page-wrapper">
+        <header id="header" class="header">
+            <div class="container">
+                <div class="branding">
+                    <h1 class="logo">
+                        <a href="" class="logo-section">
+                           <img src="images/logo.png" class="logo" alt="JupiterMeet" width="250px" height="50px" />
+                        </a>
+                    </h1>
+                </div>
+            </div>
+        </header>
+        <div class="doc-wrapper">
+            <div class="container">
+                <div id="doc-header" class="doc-header text-center">
+                    <h1 class="doc-title"><i class="icon fa fa-paper-plane"></i> Installation</h1>
+                    <div class="meta"><i class="far fa-clock"></i> Last updated: August 10th, 2021</div>
+                </div>
+                <div class="doc-body row">
+                    <div class="doc-content col-md-9 col-12 order-1">
+                        <div class="content-inner">
+                            <section id="prerequisites" class="doc-section">
+                                <h2 class="section-title">Prerequisites</h2>
+                                <div class="section-block">
+                                    <p>The following are the dependecies, you can follow the steps to get them done, or <a class="scrollto" href="#permission">skip</a> if you have them  already setup.</p>
+                                    <ul>
+                                        <li><a class="scrollto" href="#vps">VPS</a></li>
+                                        <li><a class="scrollto" href="#webServer">Web Server & SSL</a></li>
+                                        <li><a class="scrollto" href="#php">PHP >= 7.3</a></li>
+                                        <li><a class="scrollto" href="#mySql">MySQL</a></li>
+                                        <li><a class="scrollto" href="#nodeJs">NodeJS >= 12</a></li>
+                                        <li><a class="scrollto" href="#turn">TURN</a></li>
+                                    </ul>
+                                </div>
+                            </section>
+
+                            <section id="first" class="doc-section">
+                                <h2 class="section-title">First Step</h2>
+                                <div class="section-block">
+                                    <p>Log into your server as root and make sure your server is entirely up-to-date. Use <i>sudo</i> if permission denied error occurs.</p>
+                                    <p><code>apt update</code></p>
+                                    <p><code>apt full-upgrade</code></p>
+                                </div>
+                            </section>
+
+                            <section id="webServer" class="doc-section">
+                                <h2 class="section-title">Web Server & SSL</h2>
+                                <div class="section-block">
+                                    <p>You can use any web server, we will use Apache in this document.</p>
+                                    <h3>Apache</h3>
+                                    <p>Follow this section if you have a paid SSL</p>
+                                    <p><code>apt install -y apache2</code></p>
+
+                                    <h3>[Or] Apache with Certbot</h3>
+                                    <p>Follow this section if you want to use a free SSL</p>
+                                    <p><code>apt install -y software-properties-common</code></p>
+                                    <p><code>add-apt-repository ppa:certbot/certbot</code></p>
+                                    <p><code>apt install -y python-certbot-apache</code></p>
+
+                                    <h3>Configure Apache</h3>
+                                    <p>Add "ServerName yourdomain.in;" to below file and reload Apache.</p>
+
+                                    <p><code>vim /etc/apache2/sites-available/yourdomain.in.conf</code></p>
+                                    <p><code>apache2ctl configtest</code></p>
+                                    <p><code>systemctl reload apache2</code></p>
+
+                                    <h3>SSL Certificates</h3>
+                                    <p>Install SSL certificates with certbot.</p>
+                                    
+                                    <p><code>certbot --apache -d yourdomain.in</code></p>
+
+                                    <p>Open the below file and append <i>jupitermeet/public</i> at the end of <i>DocumentRoot</i>.</p>
+                                    <p><code>vim /etc/apache2/sites-available/000-default-le-ssl.conf</code></p>
+                                    <p>For ex: DocumentRoot /var/www/html/jupitermeet/public</p>
+
+                                    <p>In the same file add the following block after DocumentRoot</p>
+                                    <p><code>
+                                        &lt;Directory /var/www/html&gt; <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;Options Indexes FollowSymLinks <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;AllowOverride All <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;Require all granted <br>
+                                        &lt;/Directory&gt; <br>
+                                    </code></p>
+
+                                    <p>Enable the rewrite module</p>
+                                    <p><code>a2enmod rewrite</code></p>
+
+                                    <p>Restart the server</p>
+                                    <p><code>systemctl restart apache2</code></p>
+                                </div>
+                            </section>
+
+                            <section id="php" class="doc-section">
+                                <h2 class="section-title">PHP</h2>
+                                <div class="section-block">
+                                    <p><code>apt install software-properties-common</code></p>
+                                    <p><code>add-apt-repository ppa:ondrej/php</code></p>
+                                    <p><code>apt update</code></p>
+                                    <p><code>apt install -y php7.3</code></p>
+
+                                    <p>Install required extensions</p>
+                                    <p><code>apt install php7.3 php7.3-mbstring php7.3-mysqli php7.3-curl php7.3-dom php7.3-xml php7.3-xmlwriter php7.3-common php7.3-json php7.3-zip php7.3-bcmath php7.3-gettext -y</code></p>
+
+                                    <h3>Verify</h3>
+                                    <p><code>php -v</code></p>
+                                </div>
+                            </section>
+
+                            <section id="mySql" class="doc-section">
+                                <h2 class="section-title">MySQL</h2>
+                                <div class="section-block">
+                                    <p>Install <a href="https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-18-04" target="_blank">MySQL</a> and <a href="https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-on-ubuntu-18-04" target="_blank">phpMyAdmin</a>.</p>
+                                </div>
+                            </section>
+
+                            <section id="nodeJs" class="doc-section">
+                                <h2 class="section-title">NodeJS</h2>
+                                <div class="section-block">
+                                    <p>Download and install NodeJS and NPM.</p>
+
+                                    <p><code>apt install -y curl</code></p>
+                                    <p><code>curl -sL https://deb.nodesource.com/setup_12.x | bash -</code></p>
+                                    <p><code>apt install -y nodejs</code></p>
+
+                                    <p>Install a process manager tool</p>
+                                    <p><code>npm i -g pm2</code></p>
+
+                                    <h3>Verify</h3>
+                                    <p><code>node -v</code></p>
+                                    <p><code>npm -v</code></p>
+                                </div>
+                            </section>
+
+                            <section id="turn" class="doc-section">
+                                <h2 class="section-title">TURN Server (optional)</h2>
+                                <div class="section-block">
+                                    <p>Install and configure CoTURN. If you want to use any third party service then skip this step.</p>
+                                    
+                                    <p><code>apt install -y coturn</code></p>
+
+                                    <p>Update the config file</p>
+                                    <p><code>vim /etc/turnserver.conf</code></p>
+
+                                    <p>Now, update the details and put this code on top of the file:</p>
+                                    <ul class="list">
+                                        <li>cert=/etc/letsencrypt/live/yourdomain.in/fullchain.pem</li>
+                                        <li>pkey=/etc/letsencrypt/live/yourdomain.in/privkey.pem</li>
+                                        <li>user=username:password</li>
+                                        <li>realm=yourdomain.in</li>
+                                        <li>lt-cred-mech</li>
+                                    </ul>
+                                </div>
+                            </section>
+
+                            <section id="permission" class="doc-section">
+                                <h2 class="section-title">Permission</h2>
+                                <div class="section-block">
+                                    <p>Unzip the jupitermeet folder into the web folder (/var/www/html).</p>
+                                    
+                                    <p><code>cd /var/www/html/jupitermeet</code></p>
+                                    <p><code>chmod -R 775 . storage bootstrap system .env</code></p>
+                                    <p><code>chown -R $USER:www-data . storage bootstrap system .env</code></p>
+                                </div>
+                            </section>
+
+                            <section id="installation" class="doc-section">
+                                <h2 class="section-title">Installation</h2>
+                                <div class="section-block">
+                                    <ul>
+                                        <li>
+                                            Create an empty database from phpMyAdmin
+                                            <img src="images/db.jpeg" width="800px">
+                                        </li>
+                                    </ul>
+                                    <p>Now, you can continue to the <a href="index.html">Application setup</a> step.</p>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                    <div class="doc-sidebar col-md-3 col-12 order-0 d-none d-md-flex">
+                        <div id="doc-nav" class="doc-nav">
+                            <nav id="doc-menu" class="nav doc-menu flex-column sticky">
+                                <a class="nav-link scrollto" href="#prerequisites">Prerequisites</a>
+                                <a class="nav-link scrollto" href="#first">First Step</a>
+                                <a class="nav-link scrollto" href="#webServer">Web Server & SSL</a>
+                                <a class="nav-link scrollto" href="#php">PHP</a>
+                                <a class="nav-link scrollto" href="#mySql">MySQL</a>
+                                <a class="nav-link scrollto" href="#nodeJs">NodeJS</a>
+                                <a class="nav-link scrollto" href="#turn">TURN Server</a>
+                                <a class="nav-link scrollto" href="#permission">Permission</a>
+                                <a class="nav-link scrollto" href="#installation">Installation</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="footer" class="footer text-center">
+        <div class="container">
+            <small class="copyright">Designed with <i class="fas fa-heart"></i> by <a
+                    href="https://themes.3rdwavemedia.com/" target="_blank">Xiaoying Riley</a> for developers</small>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>
+    <script type="text/javascript" src="js/stickyfill.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+</body>
+
+</html>

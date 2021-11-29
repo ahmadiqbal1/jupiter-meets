@@ -1,0 +1,131 @@
+body {
+    width: 100%;
+    height: 100%;
+}
+.navbar {
+    z-index: 1;
+}
+.dashboard-section {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+#permission {
+    top: 0;
+    position: absolute;
+    left: 140px;
+}
+.pos-relative {
+    position: relative;
+}
+.entering-info {
+    position: absolute;
+    z-index: 2;
+    width: 60%;
+    margin: auto;
+    padding: 40px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+#meeting {
+    margin: auto;
+    width: fit-content;
+    width: -moz-fit-content;
+}
+.left-center {
+    position: fixed;
+    width: 50%;
+    background: var(--primary-color);
+    left: 0;
+    top: 0;
+    height: 100%;
+}
+.right-center {
+    position: fixed;
+    width: 50%;
+    background: #fff;
+    right: 0;
+    top: 0;
+    height: 100%;
+}
+.site-detail {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: #fff;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 26px;
+}
+.btn-outline-secondary:hover {
+    color: #fff !important;
+}
+.btn-outline-secondary:active {
+    color: inherit !important;
+    background-color: transparent !important;
+    border-color: #fff !important;
+}
+.btn-outline-secondary:hover {
+    background-color: transparent !important;
+    border-color: var(--secondary-color) !important;
+    color: var(--primary-color) !important;
+}
+.input-group input,
+.input-group input:focus,
+.input-group input:active,
+.input-group input:hover {
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid var(--secondary-color);
+
+    color: var(--secondary-color);
+    border-radius: 0 !important;
+}
+.input-group .btn {
+    border: 0;
+    border-bottom: 2px solid var(--secondary-color);
+    color: var(--secondary-color);
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    border-radius: 0 !important;
+}
+.form-control-placeholder {
+    position: absolute;
+    top: 0;
+    padding: 7px 0 0 13px;
+    transition: all 200ms;
+    opacity: 0.7;
+    color: var(--secondary-color);
+}
+.form-control:focus + .form-control-placeholder,
+._value_added_lable {
+    font-size: 75%;
+    transform: translate3d(0, -100%, 0);
+    opacity: 1;
+}
+@media only screen and (max-width: 768px) {
+    .dashboard-section {
+        position: relative;
+        padding: 15px;
+    }
+    .entering-info {
+        width: 85%;
+    }
+    .left-center {
+        width: 100%;
+        height: 50%;
+    }
+    .right-center {
+        width: 100%;
+        bottom: 0;
+        height: 50%;
+        top: auto;
+    }
+    .site-detail {
+        font-size: 20px;
+        margin-bottom: 0;
+        padding: 10px 0;
+        width: 80%;
+    }
+}

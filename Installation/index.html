@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>JupiterMeet Installation</title>
+    <meta charset="utf-8">
+    <meta name="author" content="RTC Labs">
+    <script defer src="js/all.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link id="theme-style" rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="favicon.ico" />
+</head>
+
+<body class="body-green">
+    <div class="page-wrapper">
+        <header id="header" class="header">
+            <div class="container">
+                <div class="branding">
+                    <h1 class="logo">
+                        <a href="" class="logo-section">
+                           <img src="images/logo.png" class="logo" alt="JupiterMeet" width="250px" height="50px" />
+                        </a>
+                    </h1>
+                </div>
+            </div>
+        </header>
+        <div class="doc-wrapper">
+            <div class="container">
+                <div id="doc-header" class="doc-header text-center">
+                    <h1 class="doc-title"><i class="icon fa fa-paper-plane"></i> Installation</h1>
+                    <div class="meta"><i class="far fa-clock"></i> Last updated: September 8th, 2021</div>
+                </div>
+                <div class="doc-body row">
+                    <div class="doc-content col-md-9 col-12 order-1">
+                        <div class="content-inner">
+                            <section id="introduction" class="doc-section">
+                                <h2 class="section-title">Introduction</h2>
+                                <div class="section-block">
+                                    <p>The installation of JupiterMeet is very easy and straightforward. This guide will help you run the bash script which will install and configure all the dependencies required to run the project properly on a clean Ubuntu 18.04 or CentOS 7 server. A basic knowledge of terminal is required.</p>
+
+                                    <p>Please follow all the steps very carefully. Once you have the dependencies installed, you can use the web installer to install the application from the browser itself.</p>
+
+                                    <p>Click <a href="#update" class="scrollto">here</a> to update from the older version.</p>
+                                </div>
+                            </section>
+
+                            <section id="vps" class="doc-section">
+                                <h2 class="section-title">VPS</h2>
+                                <div class="section-block">
+                                    <p>Ubuntu 18.04 with minimum of 2 GB RAM is a recommended VPS.</p>
+                                    <p>Check out this link to get a <a href="https://vpsdime.com/aff.php?aff=2076" target="_blank">cheap VPS hosting.</a></p>
+                                </div>
+                            </section>
+
+                            <section id="auto" class="doc-section">
+                                <h2 class="section-title">Automatic installation</h2>
+                                <div class="section-block">
+                                    <p>Make sure the server is empty, otherwise it may create issues. Click <a href="manual.html">here</a> if you prefer the manual way.</p>
+
+                                    <ol>
+                                        <li>
+                                            Upload the bash script (jupitermeet-installation.sh) and the application (jupitermeet.zip) to your server
+                                            <p>Note: Place the zip and the script in same directory</p>
+                                        </li>
+                                        <li>
+                                            Set execute permission on script
+                                            <p><code>chmod 700 jupitermeet-installation.sh</code></p>
+                                        </li>
+                                        <li>
+                                            Execute the script
+                                            <p><code>./jupitermeet-installation.sh</code></p>
+                                        </li>
+                                    </ol>
+
+                                    <p>Once the installation is finished, note down all the details it returns.</p>
+                                </div>
+                            </section>
+                            
+                            <section id="installation" class="doc-section">
+                                <h2 class="section-title">Application setup</h2>
+                                <div class="section-block">
+                                    <ul>
+                                        <li>
+                                            Open <b>yourdomain.in/install</b> in the browser
+                                            <img src="images/installer.png" width="800px">
+                                        </li>
+                                        <li>
+                                            <b>.env section</b>: Follow all the steps very carefully and udpate the values as below
+                                            <ul>
+                                                <span>Application</span>
+                                                <li><b>APP_ENV</b>: <i>local</i> or <i>production</i>. Based upon where you want to setup</li>
+                                                <li><b>APP_KEY</b>: No need to change</li>
+                                                <li><b>APP_DEBUG</b>: <i>true</i> or <i>false</i>. Generally, true in local server and false on production</li>
+                                                <li><b>APP_LOG_LEVEL</b>: No need to change</li>
+                                                <li><b>APP_URL</b>: Your application URL</li>
+
+                                                <span>Database</span>
+                                                <li><b>DB_CONNECTION</b>: No need to change</li>
+                                                <li><b>DB_HOST</b>: No need to change</li>
+                                                <li><b>DB_PORT</b>: No need to change</li>
+                                                <li><b>DB_DATABASE</b>: Database name that you created in the above step</li>
+                                                <li><b>DB_USERNAME</b>: Database username</li>
+                                                <li><b>DB_PASSWORD</b>: Database password</li>
+
+                                                <span>Email</span>
+                                                <li><b>MAIL_DRIVER</b>: Email driver</li>
+                                                <li><b>MAIL_HOST</b>: Email host</li>
+                                                <li><b>MAIL_PORT</b>: Email port</li>
+                                                <li><b>MAIL_USERNAME</b>: Email username</li>
+                                                <li><b>MAIL_PASSWORD</b>: Email password</li>
+                                                <li><b>MAIL_ENCRYPTION</b>: Email encryption</li>
+                                                <li><b>MAIL_FROM_NAME</b>: Your application name</li>
+                                                <li><b>MAIL_FROM_ADDRESS</b>: Your email address</li>
+                                            </ul>
+                                        </li>
+                                        <li>Please add qoutes if env variables have space in it</li>
+                                        <li>Click save and Install (Make sure you click 'Save .env' before clicking on Install)</li>
+                                    </ul>
+                                    <h3>Turn on 'less secure apps' from your Google account to allow the application to send emails</h3>
+                                    <ol>
+                                        <li>
+                                            Go to your (<a href="https://myaccount.google.com/" target="_blank">Google Account</a>).
+                                        </li>
+                                        <li>
+                                            On the left navigation panel, click <b>Security</b>.
+                                        </li>
+                                        <li>
+                                            On the bottom of the page, in the <i>Less secure app access panel</i>, click <b>Turn on access</b>.<br>
+                                        </li>
+                                        <li>
+                                            Click the <b>Save</b> button.
+                                        </li>
+                                    </ol>
+                                    <h3>Note: The application will send emails in the following cases,</h3>
+                                    <li>Reset password</li>
+                                    <li>Meeting invitation</li>
+                                    <li>Notify about plan expiration</li>
+                                </div>
+                            </section>
+
+                            <section id="signaling" class="doc-section">
+                                <h2 class="section-title">Signaling</h2>
+                                <div class="section-block">
+                                    <p>Navigate to the /server directory from terminal.</p>
+                                    <p><code>cd /var/www/html/jupitermeet/server</code></p>
+                                    <p>Update .env file to match your requirements</p>
+                                    <img src="images/env.png">
+                                    <ul>
+                                        <li><b>KEY_PATH</b>: Path to your SSL key</li>
+                                        <li><b>CERT_PATH</b>: Path to your SSL certificate</li>
+                                        <li><b>DOMAIN</b>: Your domain with https</li>
+                                        <li><b>PORT</b>: Port to run NodeJS on</li>
+                                        <li><b>MAX_FILESIZE</b>: In MB</li>
+                                        <li><b>USER_LIMIT_PER_MEETING</b>: Users allowed per meeting</li>
+                                    </ul>
+
+                                    <p>Run on production</p>
+                                    <p><code>npm run production</code></p>
+
+                                    <p>Run on local server</p>
+                                    <p><code>npm run local</code></p>
+
+                                    <p>Run the TURN server</p>
+                                    <p><code>npm run turn</code></p>
+                                </div>
+                            </section>
+
+                            <section id="configuration" class="doc-section">
+                                <h2 class="section-title">Configuration</h2>
+                                <div class="section-block">
+                                    <div class="section-block">
+                                        <h3>Storage link (optional)</h3>
+                                        <p>If you see a broken logo, that means the storage link has not been created, use this command (from root project directory)</p>
+
+                                        <p><code>php artisan storage:link</code></p>
+
+                                        <h3>Global Configuration</h3>
+                                        <ul>
+                                            <li>Login and navigate to the <b>Admin > Global Configuration</b> module</li>
+                                            <li>Here you can update application name, logo, theme color etc</li>
+                                            <li>Update the SIGNALING_URL</li>
+                                            <li>Please check the setting's description to undestand them better</li>
+                                        </ul>
+
+                                        <h3>Stripe (If payment module is enabled)</h3>
+                                        <ul>
+                                            <li>Setup your <a href="https://dashboard.stripe.com/register" target="_blank">Stripe account</a> and update <b>STRIPE_KEY</b> and <b>STRIPE_SECRET</b> values</li>
+                                            <li>Turn on the PAYMENT_MODE</li>
+                                        </ul>
+
+                                        <p>Notes:</p>
+                                        <ul>
+                                            <li>Extended License is required to enable the payment module. <a href="https://help.market.envato.com/hc/en-us/articles/115005593503-If-I-choose-the-wrong-license-or-need-to-upgrade-my-license-how-easy-is-it-to-change-to-the-correct-license-" target="_blank">Updrade to the Extended License</a></li>
+                                            <li>Non-INR currency with an Indian account is currently not supported. It will be available in the future updates</li>
+                                        </ul>
+
+                                        <h3>Scheduling (If payment module is enabled)</h3>
+                                        <p>Fire this command and add the below line to schedule the cron job.</p>
+                                        <p><code>crontab -e</code></p>
+                                        <p><i>* * * * * cd /var/www/html/jupitermeet && php artisan schedule:run >> /dev/null 2>&1</i></p>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section id="firewall" class="doc-section">
+                                <h2 class="section-title">Configure Firewall (optional)</h2>
+                                <div class="section-block">
+                                    <div class="section-block">
+                                        <p>If Firewall is active, please open the below ports for signaling and TURN server.</p>
+
+                                        <ul class="list">
+                                            <li>9006 TCP</li>
+                                            <li>3478 UDP</li>
+                                            <li>443 TCP</li>
+                                            <li>49152-65535 UDP</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section id="manage" class="doc-section">
+                                <h2 class="section-title">Manage Processes</h2>
+                                <div class="section-block">
+                                    <div class="section-block">
+                                        <p>Manage processes with PM2</p>
+                                        <h3>Manage NodeJS</h3>
+                                        <p>View running processes</p>
+                                        <p><code>pm2 list</code></p>
+
+                                        <p>Restart NodeJS server</p>
+                                        <p><code>pm2 restart JupiterMeet</code></p>
+
+                                        <h3>Manage TURN server</h3>
+                                        <p>Restart TURN server</p>
+                                        <p><code>pm2 restart turnserver</code></p>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section id="renew" class="doc-section">
+                                <h2 class="section-title">Renew SSL</h2>
+                                <div class="section-block">
+                                    <div class="section-block">
+                                        <p>Let's Encryt will renew certificates automatically but if you need to do it manually, use the below command.</p>
+                                        <p><code>certbot renew</code></p>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section id="troubleshooting" class="doc-section">
+                                <h2 class="section-title">Troubleshooting</h2>
+                                <div class="section-block">
+                                    <div class="section-block">
+                                        <p></p>
+
+                                        <ul class="list">
+                                            <li>Make sure NodeJS server is up and running.</li>
+                                            <li>Make sure frontend is pointing to the NodeJS server with your signaling port(9006)</li>
+                                            <li>Make sure the app is running on https</li>
+                                            <li>Make sure the SSL certificates are valid</li>
+                                            <li>Make sure no antivirus softwares are blocking the media device access</li>
+                                            <li>To reflect the changes, please clear browser cache and hard reload the page</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section id="update" class="doc-section">
+                                <h2 class="section-title">Update</h2>
+                                <div class="section-block">
+                                    <div class="section-block">
+                                        <p>Make sure you have installed all the <a class="scrollto" href="#prerequisites">prerequisites</a>.</p>
+
+                                        <li>Copy the settings from <i>/js/config.js</i> and <i>/server/config.js</i> files</li>
+                                        <li>Stop the PM2 program: <code>pm2 stop JupiterMeet</code></li>
+                                        <li>Or get your application name and then stop PM2 <code>pm2 list</code></li>
+                                        <li>Install the new version as described in the above steps</li>
+                                        <li>Put the <i>/js/config.js</i> file contents into the <i>.env</i> file in the installer wizard</li>
+                                        <li>Set the application name, color, logo etc from the Admin Panel, Global Configuration module</li>
+                                        <li>Put the <i>/server/config.js</i> file contents into the <i>/server/.env</i> file</li>
+                                        <li>Start NodeJS as described <a class="scrollto" href="#signaling">here</a></li>
+                                        <li>Check your signaling server state from the admin panel. Try troubleshooting steps if required</li>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                    <div class="doc-sidebar col-md-3 col-12 order-0 d-none d-md-flex">
+                        <div id="doc-nav" class="doc-nav">
+                            <nav id="doc-menu" class="nav doc-menu flex-column sticky">
+                                <a class="nav-link scrollto" href="#introduction">Introduction</a>
+                                <a class="nav-link scrollto" href="#update">Update</a>
+                                <a class="nav-link scrollto" href="#vps">VPS</a>
+                                <a class="nav-link scrollto" href="#auto">Automatic Installation</a>
+                                <a class="nav-link scrollto" href="#installation">Application Setup</a>
+                                <a class="nav-link scrollto" href="#signaling">Signaling</a>
+                                <a class="nav-link scrollto" href="#configuration">Configuration</a>
+                                <a class="nav-link scrollto" href="#firewall">Configure Firewall</a>
+                                <a class="nav-link scrollto" href="#manage">Manage Processes</a>
+                                <a class="nav-link scrollto" href="#renew">Renew SSL</a>
+                                <a class="nav-link scrollto" href="#troubleshooting">Troubleshooting</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="footer" class="footer text-center">
+        <div class="container">
+            <small class="copyright">Designed with <i class="fas fa-heart"></i> by <a
+                    href="https://themes.3rdwavemedia.com/" target="_blank">Xiaoying Riley</a> for developers</small>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>
+    <script type="text/javascript" src="js/stickyfill.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+</body>
+
+</html>

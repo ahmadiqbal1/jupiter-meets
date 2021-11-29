@@ -1,0 +1,6 @@
+Please follow these steps to download the update:
+Log into the Admin Panel -> Manage Updates -> Check for Update -> Download
+
+IMPORTANT: Execute this query in MySQL,
+
+INSERT INTO `global_config` (`id`, `key`, `value`, `description`, `created_at`, `updated_at`) VALUES (NULL, 'MODERATOR_RIGHTS', 'enabled', 'This mode will enable the moderator rights.', '2021-07-21 06:47:10', '2021-07-21 06:47:10');
